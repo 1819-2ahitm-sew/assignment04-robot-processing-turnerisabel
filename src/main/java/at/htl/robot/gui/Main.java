@@ -13,7 +13,6 @@ public class Main extends PApplet {
 
 
 
-
     // Hier die Member-Attribute eintragen
 
     public static void main(String[] args) {
