@@ -10,6 +10,11 @@ public class Main extends PApplet {
         Isabel Turner
      */
 
+    int leftMargin = 20;
+    int upperMargin = 50;
+    int boxLength = 50;
+    Robot robot;
+
 
 
 
@@ -26,16 +31,48 @@ public class Main extends PApplet {
     public void setup() {
         background(209); //https://processing.org/tutorials/color/
 
-
+        robot = new Robot();
+        robot.setX(1);
+        robot.setY(1);
     }
 
     /**
      * Diese Methode wird iterativ durchlaufen (wie loop() beim Arduino)
      */
     public void draw() {
+        for (int i = 0; i < 11; i++) {
+            line(leftMargin,
+                    upperMargin + i * boxLength,
+                    leftMargin + 10 * boxLength,
+                    upperMargin + i * boxLength);
+
+
+
+            line(leftMargin + i* boxLength, upperMargin,
+                        leftMargin + i * boxLength,
+                        upperMargin + 10 * boxLength);
+
+
+//            ellipse(leftMargin + boxLength / 2,
+//                    upperMargin + boxLength / 2,
+//                   (int) (boxLength  * 0.8),
+//                   (int) (boxLength  * 0.8));
+//
+//            ellipse(leftMargin + boxLength / 2 + 1 * boxLength,
+//                    upperMargin + boxLength / 2 ,
+//                   (int) (boxLength  * 0.8),
+//                   (int) (boxLength  * 0.8));
+//
+//            ellipse(leftMargin + boxLength / 2,
+//                    upperMargin + boxLength / 2 + 1 * boxLength,
+//                   (int) (boxLength  * 0.8),
+//                   (int) (boxLength  * 0.8));
+
+            drawRobot(robot);
+
 
     }
-
+}
     /**
      * Erstellen Sie eine eigene Methode, mittels der der Roboter am Bildschirm gezeichnet wird
      * Die Angabe zu Position des Roboters am Spielfeld erhalten Sie aus dem Roboter-Objekt, welches
@@ -45,14 +82,20 @@ public class Main extends PApplet {
      */
     public void drawRobot(Robot robot) {
 
+        int boxCenterX = leftMargin  + robot.getX() * boxLength - boxLength / 2;
+        int boxCenterY = upperMargin + robot.getY() * boxLength - boxLength / 2;
 
+        ellipse(boxCenterX ,
+                boxCenterY,
+                (int) (boxLength * 0.8),
+                (int) (boxLength * 0.8));
     }
 
     /**
      * Erstellen Sie eine eigene Methode zum Löschen des Bildschirms
      */
     public void deleteAll() {
-
+        background(209);
     }
 
     /**
@@ -62,9 +105,10 @@ public class Main extends PApplet {
         println("pressed " + key + " " + keyCode);
 
         if (key == 'f' || key == 'F') {
-
+            robot.stepForward();
+            deleteAll();
         } else if (key == 'l' || key == 'L') {
-
+            robot.rotateLeft();
         }
 
     }
